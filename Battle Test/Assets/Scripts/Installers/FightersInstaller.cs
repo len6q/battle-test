@@ -1,0 +1,64 @@
+using UnityEngine;
+using Zenject;
+
+public class FightersInstaller : MonoInstaller
+{
+    [Header("Player Configs")]
+    [SerializeField] private FighterConfig _playerFighterConfig;
+    [SerializeField] private VisualisationConfig _playerVisualConfig;
+    [Space]
+    [Header("Enemy Configs")]
+    [SerializeField] private FighterConfig _enemyFighterConfig;
+    [SerializeField] private VisualisationConfig _enemyVisualConfig;
+
+    public override void InstallBindings()
+    {
+        BindPlayerConfig();
+        BindPlayer();
+
+        BindEnemyConfig();
+        BindEnemy();
+    }
+
+    private void BindPlayerConfig()
+    {
+        Container.
+            BindInstance(_playerFighterConfig).
+            WithId(FighterType.Player);
+
+        Container.
+            BindInstance(_playerVisualConfig).
+            WithId(FighterType.Player);            
+    }
+
+    private void BindPlayer()
+    {
+        var fighter = Container.
+            InstantiatePrefabForComponent<Player>(_playerFighterConfig.Prefab);
+
+        Container.
+            BindInstance(fighter).
+            AsSingle();
+    }
+
+    private void BindEnemyConfig()
+    {
+        Container.
+            BindInstance(_enemyFighterConfig).
+            WithId(FighterType.Enemy);
+
+        Container.
+            BindInstance(_enemyVisualConfig).
+            WithId(FighterType.Enemy);
+    }
+
+    private void BindEnemy()
+    {
+        var fighter = Container.
+            InstantiatePrefabForComponent<Enemy>(_enemyFighterConfig.Prefab);
+
+        Container.
+            BindInstance(fighter).
+            AsSingle();
+    }
+}

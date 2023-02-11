@@ -12,9 +12,7 @@ public class ProtectionField : MonoBehaviour
 
     private Toggle _toggle;    
 
-    public BodyPartType Type => _type;
-
-    public Toggle Toggle => _toggle;
+    public BodyPartType Type => _type;    
 
     private void Start()
     {
@@ -26,8 +24,17 @@ public class ProtectionField : MonoBehaviour
     {
         _toggle.onValueChanged.RemoveListener(_ => SetProtectionValue(_toggle));
     }
+    
+    public void DisableToggle()
+    {
+        _toggle.enabled = _toggle.isOn;
+    }
 
-    //TODO Исправить проблему с onvaluechanged и ison toggle//
+    public void EnableToggle()
+    {
+        _toggle.enabled = true;
+    }
+
     private void SetProtectionValue(Toggle toggle)
     {        
         if (CanPushProtectionPoints.Invoke(toggle.isOn))

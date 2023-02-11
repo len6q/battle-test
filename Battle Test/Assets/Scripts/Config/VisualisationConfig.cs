@@ -3,13 +3,10 @@
 [CreateAssetMenu]
 public class VisualisationConfig : ScriptableObject
 {
-    [SerializeField] private Material _standardMat;
-    [SerializeField] private Material _selectedMat;
-    [SerializeField] private Material _protectedMat;
+    [SerializeField] private Material _standard;
+    [SerializeField] private Material _selected;    
 
-    public Material Standard => _standardMat;
+    public Material Standard => _standard;
 
-    public Material Selected => _selectedMat;
-
-    public Material Protected => _protectedMat;
+    public Material Selected => _selected;    
 }

@@ -1,20 +1,26 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Zenject;
 
-public class Game : MonoBehaviour, IGameStateSwitcher
-{        
-    [SerializeField] private GameConfig _gameConfig;
-    [SerializeField] private VisualisationConfig _visualConfig;
-    [SerializeField] private DefenderHud _defenderHud;
-    [SerializeField] private Fighter _player;
-    [SerializeField] private Fighter _enemy;
+public class Game : IGameStateSwitcher, IInitializable, IDisposable
+{            
+    private readonly DefenderHud _defenderHud;
+    private readonly Player _player;
+    private readonly Enemy _enemy;
 
     private GameBaseState _currentState;
     private List<GameBaseState> _allStates;
 
-    private void Start()
+    public Game(Player player, Enemy enemy, DefenderHud defenderHud)
     {
+        _player = player;
+        _enemy = enemy;
+        _defenderHud = defenderHud;        
+    }
+
+    public void Initialize()
+    {        
         _allStates = new List<GameBaseState>()
         {
             new PlayerPreparationState(this),
@@ -23,23 +29,6 @@ public class Game : MonoBehaviour, IGameStateSwitcher
         };
         _currentState = _allStates[0];
 
-        _player.Init(
-            _gameConfig.PlayerHealth,
-            _visualConfig.Standard,
-            _visualConfig.Selected);
-        
-        _enemy.Init(
-            _gameConfig.EnemyHealth,
-            _visualConfig.Standard,
-            _visualConfig.Protected);
-
-        _defenderHud.Init(
-            _gameConfig.AttackPoints,
-            _gameConfig.ProtectionPoints);
-    }
-
-    private void OnEnable()
-    {
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
             AttackField attackField = _defenderHud.GetDesiredAttackField(i);
@@ -49,7 +38,7 @@ public class Game : MonoBehaviour, IGameStateSwitcher
             attackField.OnSetAttackValue += bodyPart.SetDamage;
         }
 
-        for(int i = 0; i < _defenderHud.CountProtectionFields; i++)
+        for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
         {
             ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
             BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
@@ -57,9 +46,9 @@ public class Game : MonoBehaviour, IGameStateSwitcher
         }
     }
 
-    private void OnDisable()
+    public void Dispose()
     {
-        for(int i = 0; i < _defenderHud.CountAttackFields; i++)
+        for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
             AttackField attackField = _defenderHud.GetDesiredAttackField(i);
             BodyPart bodyPart = _player.GetDesiredPart(attackField.Type);
@@ -67,7 +56,7 @@ public class Game : MonoBehaviour, IGameStateSwitcher
             attackField.OnDeselected -= bodyPart.Deselect;
             attackField.OnSetAttackValue -= bodyPart.SetDamage;
         }
-        
+
         for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
         {
             ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
@@ -79,7 +68,7 @@ public class Game : MonoBehaviour, IGameStateSwitcher
     public void SwitchState<T>() where T : GameBaseState
     {
         _currentState.Exit();
-        var state = _allStates.FirstOrDefault(s => s is T);        
+        var state = _allStates.FirstOrDefault(s => s is T);
         _currentState = state;
         _currentState.Enter();
     }

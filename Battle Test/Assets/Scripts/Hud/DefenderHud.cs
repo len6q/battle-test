@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class DefenderHud : MonoBehaviour
 {
@@ -38,34 +39,21 @@ public class DefenderHud : MonoBehaviour
             _protectionPointsText.text = _protectionPoints.ToString();
         }
     }
+    
+    [Inject]
+    private void Construct(GameConfig config)
+    {        
+        CurrentAttackPoints = config.AttackPoints;
+        CurrentProtectionPoints = config.ProtectionPoints;
+
+        _allAttackFields.ForEach(field => field.CanPushAttackPoint += CanPushAttackPoint);
+        _allProtectionFields.ForEach(field => field.CanPushProtectionPoints += CanPushProtectionPoint);
+    }
 
     private void OnDestroy()
     {
-        foreach (var field in _allAttackFields)
-        {
-            field.CanPushAttackPoint -= CanPushAttackPoint;            
-        }
-        
-        foreach(var field in _allProtectionFields)
-        {
-            field.CanPushProtectionPoints -= CanPushProtectionPoint;            
-        }
-    }
-
-    public void Init(int attackPoints, int protectionPoints)
-    {        
-        CurrentAttackPoints = attackPoints;
-        CurrentProtectionPoints = protectionPoints;
-        
-        foreach(var field in _allAttackFields)
-        {
-            field.CanPushAttackPoint += CanPushAttackPoint;
-        }
-        
-        foreach (var field in _allProtectionFields)
-        {
-            field.CanPushProtectionPoints += CanPushProtectionPoint;
-        }
+        _allAttackFields.ForEach(field => field.CanPushAttackPoint -= CanPushAttackPoint);
+        _allProtectionFields.ForEach(field => field.CanPushProtectionPoints -= CanPushProtectionPoint);
     }
 
     public AttackField GetDesiredAttackField(int indexCollection) => 
@@ -112,19 +100,9 @@ public class DefenderHud : MonoBehaviour
         return false;
     }
 
-    private void DisableToggles()
-    {
-        foreach(var field in _allProtectionFields)
-        {
-            field.Toggle.enabled = field.Toggle.isOn;
-        }
-    }
+    private void DisableToggles() =>
+        _allProtectionFields.ForEach(field => field.DisableToggle());
 
-    private void EnableToggles()
-    {
-        foreach(var field in _allProtectionFields)
-        {
-            field.Toggle.enabled = true;
-        }
-    }
+    private void EnableToggles() =>
+        _allProtectionFields.ForEach(field => field.EnableToggle());
 }
