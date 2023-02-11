@@ -1,20 +1,22 @@
-﻿using System;
-
-public class FightState : GameBaseState
+﻿public class FightState : GameBaseState
 {
-    public FightState(IGameStateSwitcher gameStateSwitcher)
-        : base(gameStateSwitcher)
+    public FightState(Player player, Enemy enemy, DefenderHud defenderHud, IGameStateSwitcher gameStateSwitcher)
+        : base(player, enemy, defenderHud, gameStateSwitcher)
     {
-
     }
 
     public override void Enter()
     {
-        throw new NotImplementedException();
+        
     }
 
     public override void Exit()
     {
-        throw new NotImplementedException();
+        
+    }
+
+    public override void Tick()
+    {
+        
     }
 }

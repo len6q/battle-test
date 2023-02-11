@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 
-public class Game : IGameStateSwitcher, IInitializable, IDisposable
+public class Game : IGameStateSwitcher, IInitializable, ITickable
 {            
     private readonly DefenderHud _defenderHud;
     private readonly Player _player;
@@ -23,46 +22,17 @@ public class Game : IGameStateSwitcher, IInitializable, IDisposable
     {        
         _allStates = new List<GameBaseState>()
         {
-            new PlayerPreparationState(this),
-            new EnemyPreparationState(this),
-            new FightState(this)
+            new PlayerPreparationState(_player, _enemy, _defenderHud, this),
+            new EnemyPreparationState(_player, _enemy, _defenderHud, this),
+            new FightState(_player, _enemy, _defenderHud, this)
         };
         _currentState = _allStates[0];
-
-        for (int i = 0; i < _defenderHud.CountAttackFields; i++)
-        {
-            AttackField attackField = _defenderHud.GetDesiredAttackField(i);
-            BodyPart bodyPart = _player.GetDesiredPart(attackField.Type);
-            attackField.OnSelected += bodyPart.Select;
-            attackField.OnDeselected += bodyPart.Deselect;
-            attackField.OnSetAttackValue += bodyPart.SetDamage;
-        }
-
-        for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
-        {
-            ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
-            BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
-            protectionField.OnSetProtectionValue += bodyPart.SetProtection;
-        }
+        _currentState.Enter();
     }
 
-    public void Dispose()
-    {
-        for (int i = 0; i < _defenderHud.CountAttackFields; i++)
-        {
-            AttackField attackField = _defenderHud.GetDesiredAttackField(i);
-            BodyPart bodyPart = _player.GetDesiredPart(attackField.Type);
-            attackField.OnSelected -= bodyPart.Select;
-            attackField.OnDeselected -= bodyPart.Deselect;
-            attackField.OnSetAttackValue -= bodyPart.SetDamage;
-        }
-
-        for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
-        {
-            ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
-            BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
-            protectionField.OnSetProtectionValue -= bodyPart.SetProtection;
-        }
+    public void Tick()
+    {        
+        _currentState.Tick();
     }
 
     public void SwitchState<T>() where T : GameBaseState
