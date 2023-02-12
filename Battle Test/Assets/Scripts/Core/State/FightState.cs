@@ -2,8 +2,11 @@
 
 public class FightState : GameBaseState
 {
-    public FightState(Player player, Enemy enemy, DefenderHud defenderHud, IGameStateSwitcher gameStateSwitcher)
-        : base(player, enemy, defenderHud, gameStateSwitcher)
+    public FightState(
+        Player player, Enemy enemy,
+        DefenderHud defenderHud, GameConfig config,
+        IGameStateSwitcher gameStateSwitcher)
+        : base(player, enemy, defenderHud, config, gameStateSwitcher)
     {
     }
 

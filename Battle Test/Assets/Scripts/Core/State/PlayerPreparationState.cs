@@ -2,8 +2,7 @@
 
 public class PlayerPreparationState : GameBaseState
 {
-    private const float CACHE_TIME = 15f;
-    
+    private readonly float _cacheTime;    
     private float _preparationTime;
 
     private float PreparationTime
@@ -21,17 +20,43 @@ public class PlayerPreparationState : GameBaseState
         }
     }
 
-    public PlayerPreparationState(Player player, Enemy enemy, DefenderHud defenderHud, IGameStateSwitcher gameStateSwitcher)
-        : base(player, enemy, defenderHud, gameStateSwitcher)
-    {        
+    public PlayerPreparationState(
+        Player player, Enemy enemy,
+        DefenderHud defenderHud, GameConfig config,
+        IGameStateSwitcher gameStateSwitcher)
+        : base(player, enemy, defenderHud, config, gameStateSwitcher)
+    {
+        _cacheTime = _config.PreparationTime;
     }
 
     public override void Enter()
     {
         Debug.Log(this);
-        _preparationTime = CACHE_TIME;
+        _preparationTime = _cacheTime;
 
-        _defenderHud.OnClickPlayButton += SwitchState;        
+        InitFighters();
+        RegistrationEvents();              
+    }
+
+    public override void Exit()
+    {
+        _defenderHud.Refresh();
+        DeregistrationEvents();
+    }
+
+    public override void Tick()
+    {
+        PreparationTime -= Time.deltaTime;        
+    }
+
+    private void SwitchState()
+    {
+        _gameStateSwitcher.SwitchState<EnemyPreparationState>();
+    }
+
+    private void RegistrationEvents()
+    {
+        _defenderHud.OnClickPlayButton += SwitchState;
 
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
@@ -48,12 +73,11 @@ public class PlayerPreparationState : GameBaseState
             BodyPart bodyPart = _player.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue += bodyPart.SetProtection;
             protectionField.OnDeselected += bodyPart.Deselect;
-        }        
+        }
     }
 
-    public override void Exit()
+    private void DeregistrationEvents()
     {        
-        _defenderHud.Refresh();
         _defenderHud.OnClickPlayButton -= SwitchState;
 
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
@@ -74,13 +98,11 @@ public class PlayerPreparationState : GameBaseState
         }
     }
 
-    public override void Tick()
+    private void InitFighters()
     {
-        PreparationTime -= Time.deltaTime;        
-    }
-
-    private void SwitchState()
-    {
-        _gameStateSwitcher.SwitchState<EnemyPreparationState>();
+        _player.transform.localPosition = _config.PlayerSpawnPoint;
+        _player.transform.localRotation = Quaternion.identity;
+        _enemy.transform.localPosition = _config.EnemySpawnPoint;
+        _enemy.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
     }
 }

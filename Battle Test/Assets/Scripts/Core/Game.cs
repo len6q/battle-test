@@ -7,25 +7,27 @@ public class Game : IGameStateSwitcher, IInitializable, ITickable
     private readonly DefenderHud _defenderHud;
     private readonly Player _player;
     private readonly Enemy _enemy;
+    private readonly GameConfig _config;
 
     private GameBaseState _currentState;
     private List<GameBaseState> _allStates;
 
-    public Game(Player player, Enemy enemy, DefenderHud defenderHud)
+    public Game(Player player, Enemy enemy, DefenderHud defenderHud, GameConfig gameConfig)
     {
         _player = player;
         _enemy = enemy;
-        _defenderHud = defenderHud;        
+        _defenderHud = defenderHud;
+        _config = gameConfig;
     }
 
     public void Initialize()
     {        
         _allStates = new List<GameBaseState>()
         {
-            new PlayerPreparationState(_player, _enemy, _defenderHud, this),
-            new EnemyPreparationState(_player, _enemy, _defenderHud, this),
-            new FightState(_player, _enemy, _defenderHud, this),
-            new GameOverState(_player, _enemy, _defenderHud, this)
+            new PlayerPreparationState(_player, _enemy, _defenderHud, _config, this),
+            new EnemyPreparationState(_player, _enemy, _defenderHud, _config, this),
+            new FightState(_player, _enemy, _defenderHud, _config, this),
+            new GameOverState(_player, _enemy, _defenderHud, _config, this)
         };
         _currentState = _allStates[0];
         _currentState.Enter();
