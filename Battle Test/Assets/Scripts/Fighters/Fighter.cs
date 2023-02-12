@@ -13,11 +13,7 @@ public abstract class Fighter : MonoBehaviour
     private void Construct(FighterConfig fighterConfig, VisualisationConfig visualConfig)
     {
         _health = fighterConfig.Health;
-
-        foreach (var part in _allParts)
-        {
-            part.Init(visualConfig.Standard, visualConfig.Selected);
-        }
+        _allParts.ForEach(part => part.Init(visualConfig));
     }
 
     public BodyPart GetDesiredPart(BodyPartType type) => 

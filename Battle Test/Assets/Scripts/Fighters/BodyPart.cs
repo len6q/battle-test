@@ -5,32 +5,29 @@ public class BodyPart : MonoBehaviour
 {
     [SerializeField] private BodyPartType _type;
 
-    private Material _standard;
-    private Material _selected;    
     private MeshRenderer _renderer;
+    private VisualisationConfig _visualConfig;
     
     private int _receivedDamage;
     private bool _isProtected;
 
     public BodyPartType Type => _type;
 
-    public void Init(Material standard, Material selected)
+    public void Init(VisualisationConfig config)
     {
-        _standard = standard;
-        _selected = selected;
-
+        _visualConfig = config;
         _renderer = GetComponent<MeshRenderer>();
-        _renderer.material = _standard;
+        _renderer.material = _visualConfig.Standard;
     }
 
     public void Select()
     {
-        _renderer.material = _selected;
+        _renderer.material = _visualConfig.Attack;
     }
 
     public void Deselect()
     {
-        _renderer.material = _standard;
+        _renderer.material = _visualConfig.Standard;
     }
 
     public void SetDamage(int value)
@@ -42,8 +39,8 @@ public class BodyPart : MonoBehaviour
     {
         _isProtected = value;
         if (_isProtected)
-            _renderer.material = _selected;
+            _renderer.material = _visualConfig.Protected;
         else
-            _renderer.material = _standard;
+            _renderer.material = _visualConfig.Standard;
     }
 }

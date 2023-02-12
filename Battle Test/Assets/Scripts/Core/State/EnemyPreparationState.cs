@@ -2,7 +2,7 @@
 
 public class EnemyPreparationState : GameBaseState
 {
-    private float _preparationTime = 15f;
+    private float _preparationTime = 10f;
 
     private float PreparationTime
     {
@@ -26,13 +26,12 @@ public class EnemyPreparationState : GameBaseState
 
     public override void Enter()
     {
-        _defenderHud.Refresh();
         _defenderHud.OnClickPlayButton += SwitchState;
 
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
             AttackField attackField = _defenderHud.GetDesiredAttackField(i);
-            BodyPart bodyPart = _enemy.GetDesiredPart(attackField.Type);
+            BodyPart bodyPart = _player.GetDesiredPart(attackField.Type);
             attackField.OnSelected += bodyPart.Select;
             attackField.OnDeselected += bodyPart.Deselect;
             attackField.OnSetAttackValue += bodyPart.SetDamage;
@@ -41,10 +40,10 @@ public class EnemyPreparationState : GameBaseState
         for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
         {
             ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
-            BodyPart bodyPart = _player.GetDesiredPart(protectionField.Type);
+            BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue += bodyPart.SetProtection;
-        }
-        
+            protectionField.OnDeselected += bodyPart.Deselect;
+        }                
     }
 
     public override void Exit()
@@ -54,7 +53,7 @@ public class EnemyPreparationState : GameBaseState
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
             AttackField attackField = _defenderHud.GetDesiredAttackField(i);
-            BodyPart bodyPart = _enemy.GetDesiredPart(attackField.Type);
+            BodyPart bodyPart = _player.GetDesiredPart(attackField.Type);
             attackField.OnSelected -= bodyPart.Select;
             attackField.OnDeselected -= bodyPart.Deselect;
             attackField.OnSetAttackValue -= bodyPart.SetDamage;
@@ -63,8 +62,9 @@ public class EnemyPreparationState : GameBaseState
         for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
         {
             ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
-            BodyPart bodyPart = _player.GetDesiredPart(protectionField.Type);
+            BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue -= bodyPart.SetProtection;
+            protectionField.OnDeselected -= bodyPart.Deselect;
         }
     }
 

@@ -18,7 +18,7 @@ public class AttackField : MonoBehaviour, ISelectHandler, IDeselectHandler
     public BodyPartType Type => _type;
 
     public void OnDeselect(BaseEventData eventData)
-    {
+    {        
         OnDeselected?.Invoke();
     }
 
@@ -32,6 +32,7 @@ public class AttackField : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         _field.onEndEdit.RemoveAllListeners();
         _field.text = null;
+        OnDeselected?.Invoke();
         _field.onEndEdit.AddListener(_ => SetAttackValue(_field));
     }
 

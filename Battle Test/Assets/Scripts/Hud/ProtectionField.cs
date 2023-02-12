@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class ProtectionField : MonoBehaviour
 {
     [SerializeField] private BodyPartType _type;
-    [SerializeField] private Toggle _toggle;    
+    [SerializeField] private Toggle _toggle;
 
+    public event Action OnDeselected;
     public event Action<bool> OnSetProtectionValue;
     public event Func<bool, bool> CanPushProtectionPoints;    
 
@@ -15,7 +16,7 @@ public class ProtectionField : MonoBehaviour
     public void ClearToggle()
     {
         _toggle.onValueChanged.RemoveAllListeners();
-        _toggle.isOn = false;
+        ClearBodyPart();
         _toggle.onValueChanged.AddListener(_ => SetProtectionValue(_toggle));
     }
 
@@ -27,6 +28,12 @@ public class ProtectionField : MonoBehaviour
     public void EnableToggle()
     {
         _toggle.enabled = true;
+    }
+
+    private void ClearBodyPart()
+    {
+        _toggle.isOn = false;
+        OnDeselected?.Invoke();
     }
 
     private void SetProtectionValue(Toggle toggle)

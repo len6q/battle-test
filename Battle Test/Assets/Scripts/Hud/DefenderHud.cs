@@ -57,7 +57,8 @@ public class DefenderHud : MonoBehaviour
     [Inject]
     private void Construct(GameConfig config)
     {
-        _gameConfig = config;        
+        _gameConfig = config;
+        Refresh();
 
         _allAttackFields.ForEach(field => field.CanPushAttackPoint += CanPushAttackPoint);
         _allProtectionFields.ForEach(field => field.CanPushProtectionPoints += CanPushProtectionPoint);

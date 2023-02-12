@@ -4,9 +4,12 @@
 public class VisualisationConfig : ScriptableObject
 {
     [SerializeField] private Material _standard;
-    [SerializeField] private Material _selected;    
+    [SerializeField] private Material _attack;
+    [SerializeField] private Material _protected;
 
     public Material Standard => _standard;
 
-    public Material Selected => _selected;    
+    public Material Attack => _attack;
+
+    public Material Protected => _protected;
 }
