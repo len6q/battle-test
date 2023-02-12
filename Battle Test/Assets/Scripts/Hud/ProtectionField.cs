@@ -33,6 +33,7 @@ public class ProtectionField : MonoBehaviour
     private void ClearBodyPart()
     {
         _toggle.isOn = false;
+        _toggle.enabled = true;
         OnDeselected?.Invoke();
     }
 

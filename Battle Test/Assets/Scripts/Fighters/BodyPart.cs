@@ -13,6 +13,10 @@ public class BodyPart : MonoBehaviour
 
     public BodyPartType Type => _type;
 
+    public int ReceivedDamage => _receivedDamage;
+
+    public bool IsProtected => _isProtected;
+
     public void Init(VisualisationConfig config)
     {
         _visualConfig = config;

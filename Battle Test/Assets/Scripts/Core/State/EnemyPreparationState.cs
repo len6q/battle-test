@@ -2,7 +2,9 @@
 
 public class EnemyPreparationState : GameBaseState
 {
-    private float _preparationTime = 10f;
+    private const float CACHE_TIME = 5f;
+
+    private float _preparationTime;
 
     private float PreparationTime
     {
@@ -26,6 +28,9 @@ public class EnemyPreparationState : GameBaseState
 
     public override void Enter()
     {
+        Debug.Log(this);
+        _preparationTime = CACHE_TIME;
+
         _defenderHud.OnClickPlayButton += SwitchState;
 
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)

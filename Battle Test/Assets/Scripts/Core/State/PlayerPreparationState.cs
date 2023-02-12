@@ -2,7 +2,9 @@
 
 public class PlayerPreparationState : GameBaseState
 {
-    private float _preparationTime = 5f;
+    private const float CACHE_TIME = 5f;
+    
+    private float _preparationTime;
 
     private float PreparationTime
     {
@@ -21,11 +23,14 @@ public class PlayerPreparationState : GameBaseState
 
     public PlayerPreparationState(Player player, Enemy enemy, DefenderHud defenderHud, IGameStateSwitcher gameStateSwitcher)
         : base(player, enemy, defenderHud, gameStateSwitcher)
-    {
+    {        
     }
 
     public override void Enter()
-    {        
+    {
+        Debug.Log(this);
+        _preparationTime = CACHE_TIME;
+
         _defenderHud.OnClickPlayButton += SwitchState;        
 
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
@@ -47,7 +52,7 @@ public class PlayerPreparationState : GameBaseState
     }
 
     public override void Exit()
-    {
+    {        
         _defenderHud.Refresh();
         _defenderHud.OnClickPlayButton -= SwitchState;
 

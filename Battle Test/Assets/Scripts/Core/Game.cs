@@ -24,7 +24,8 @@ public class Game : IGameStateSwitcher, IInitializable, ITickable
         {
             new PlayerPreparationState(_player, _enemy, _defenderHud, this),
             new EnemyPreparationState(_player, _enemy, _defenderHud, this),
-            new FightState(_player, _enemy, _defenderHud, this)
+            new FightState(_player, _enemy, _defenderHud, this),
+            new GameOverState(_player, _enemy, _defenderHud, this)
         };
         _currentState = _allStates[0];
         _currentState.Enter();

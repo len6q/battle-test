@@ -9,6 +9,8 @@ public abstract class Fighter : MonoBehaviour
     
     private int _health;
 
+    public int Health => _health;
+
     [Inject]
     private void Construct(FighterConfig fighterConfig, VisualisationConfig visualConfig)
     {
@@ -18,4 +20,16 @@ public abstract class Fighter : MonoBehaviour
 
     public BodyPart GetDesiredPart(BodyPartType type) => 
         _allParts.FirstOrDefault(part => part.Type == type);    
+
+    public void Fight()
+    {
+        foreach (var part in _allParts)
+        {
+            if(part.IsProtected == false)
+            {
+                _health -= part.ReceivedDamage;
+            }
+        }
+        Debug.Log(_health);
+    }
 }
