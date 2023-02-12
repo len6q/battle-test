@@ -25,7 +25,6 @@ public class FightState : GameBaseState
     }
 
     public override void Tick()
-    {
-        
+    {        
     }
 }

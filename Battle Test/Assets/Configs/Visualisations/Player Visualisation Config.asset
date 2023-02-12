@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Player Visualisation Config
   m_EditorClassIdentifier: 
   _standard: {fileID: 2100000, guid: f0357568673b3ef49b490bb7ca46065e, type: 2}
-  _selected: {fileID: 2100000, guid: 9e81486560dc0254fb31c115d98d67a4, type: 2}
+  _attack: {fileID: 2100000, guid: 9e81486560dc0254fb31c115d98d67a4, type: 2}
+  _protected: {fileID: 2100000, guid: e8b83019684732a45aa8b3a87ee0a1a0, type: 2}

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e837d6f6103322d45bc7b423cb6509a5, type: 3}
   m_Name: Player Fighter Config
   m_EditorClassIdentifier: 
-  _fighterPrefab: {fileID: 9156287215549896949, guid: 33ef9448bdada1d49a491fcbb1a960a8,
+  _fighterPrefab: {fileID: 7396752853897310114, guid: f268eb7105168424c9dd81e07649a325,
     type: 3}
   _health: 8

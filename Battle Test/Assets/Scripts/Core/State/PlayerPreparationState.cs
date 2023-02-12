@@ -2,7 +2,7 @@
 
 public class PlayerPreparationState : GameBaseState
 {
-    private const float CACHE_TIME = 5f;
+    private const float CACHE_TIME = 15f;
     
     private float _preparationTime;
 

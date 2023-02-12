@@ -6,10 +6,12 @@ public class FightersInstaller : MonoInstaller
     [Header("Player Configs")]
     [SerializeField] private FighterConfig _playerFighterConfig;
     [SerializeField] private VisualisationConfig _playerVisualConfig;
+    [SerializeField] private Vector3 _playerSpawnPoint;
     [Space]
     [Header("Enemy Configs")]
     [SerializeField] private FighterConfig _enemyFighterConfig;
     [SerializeField] private VisualisationConfig _enemyVisualConfig;
+    [SerializeField] private Vector3 _enemySpawnPoint;
 
     public override void InstallBindings()
     {
@@ -34,7 +36,11 @@ public class FightersInstaller : MonoInstaller
     private void BindPlayer()
     {
         var fighter = Container.
-            InstantiatePrefabForComponent<Player>(_playerFighterConfig.Prefab);
+            InstantiatePrefabForComponent<Player>(
+            _playerFighterConfig.Prefab,
+            _playerSpawnPoint,
+            Quaternion.identity,
+            null);
 
         Container.
             BindInstance(fighter).
@@ -55,7 +61,11 @@ public class FightersInstaller : MonoInstaller
     private void BindEnemy()
     {
         var fighter = Container.
-            InstantiatePrefabForComponent<Enemy>(_enemyFighterConfig.Prefab);
+            InstantiatePrefabForComponent<Enemy>(
+            _enemyFighterConfig.Prefab,
+            _enemySpawnPoint,
+            Quaternion.Euler(0f, -90f, 0f),
+            null);
 
         Container.
             BindInstance(fighter).
