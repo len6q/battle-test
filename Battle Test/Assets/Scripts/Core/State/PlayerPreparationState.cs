@@ -1,5 +1,7 @@
 ﻿public class PlayerPreparationState : GameBaseState
 {
+    private const int PREPARATION_TIME = 15;
+
     public PlayerPreparationState(Player player, Enemy enemy, DefenderHud defenderHud, IGameStateSwitcher gameStateSwitcher)
         : base(player, enemy, defenderHud, gameStateSwitcher)
     {
@@ -47,6 +49,6 @@
 
     public override void Tick()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

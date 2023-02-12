@@ -24,11 +24,11 @@ public class FightersInstaller : MonoInstaller
     {
         Container.
             BindInstance(_playerFighterConfig).
-            WithId(FighterType.Player);
-
+            WhenInjectedInto<Player>();
+        
         Container.
             BindInstance(_playerVisualConfig).
-            WithId(FighterType.Player);            
+            WhenInjectedInto<Player>();
     }
 
     private void BindPlayer()
@@ -45,11 +45,11 @@ public class FightersInstaller : MonoInstaller
     {
         Container.
             BindInstance(_enemyFighterConfig).
-            WithId(FighterType.Enemy);
-
+            WhenInjectedInto<Enemy>();
+        
         Container.
             BindInstance(_enemyVisualConfig).
-            WithId(FighterType.Enemy);
+            WhenInjectedInto<Enemy>();
     }
 
     private void BindEnemy()
