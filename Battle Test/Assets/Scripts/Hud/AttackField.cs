@@ -3,31 +3,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-[RequireComponent(typeof(TMP_InputField))]
 public class AttackField : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private BodyPartType _type;
+    [SerializeField] private TMP_InputField _field;
 
     public event Action OnSelected;
     public event Action OnDeselected;
     public event Action<int> OnSetAttackValue;
     public event Func<int, bool> CanPushAttackPoint;
 
-    private TMP_InputField _field;
     private int _currentValue;
 
     public BodyPartType Type => _type;
-
-    private void Start()
-    {
-        _field = GetComponent<TMP_InputField>();
-        _field.onEndEdit.AddListener(_ => SetAttackValue(_field));
-    }
-
-    private void OnDestroy()
-    {
-        _field.onEndEdit.RemoveListener(_ => SetAttackValue(_field));
-    }
 
     public void OnDeselect(BaseEventData eventData)
     {
@@ -38,6 +26,13 @@ public class AttackField : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         int.TryParse(_field.text, out _currentValue);
         OnSelected?.Invoke();
+    }
+
+    public void ClearField()
+    {
+        _field.onEndEdit.RemoveAllListeners();
+        _field.text = null;
+        _field.onEndEdit.AddListener(_ => SetAttackValue(_field));
     }
 
     private void SetAttackValue(TMP_InputField field)

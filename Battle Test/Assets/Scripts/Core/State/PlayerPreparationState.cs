@@ -1,6 +1,23 @@
-﻿public class PlayerPreparationState : GameBaseState
+﻿using UnityEngine;
+
+public class PlayerPreparationState : GameBaseState
 {
-    private const int PREPARATION_TIME = 15;
+    private float _preparationTime = 5f;
+
+    private float PreparationTime
+    {
+        get => _preparationTime;
+        set
+        {
+            _preparationTime = value;
+            if(_preparationTime < 0)
+            {
+                SwitchState();                
+            }
+                        
+            _defenderHud.SetValueOnTimer(Mathf.CeilToInt(_preparationTime));
+        }
+    }
 
     public PlayerPreparationState(Player player, Enemy enemy, DefenderHud defenderHud, IGameStateSwitcher gameStateSwitcher)
         : base(player, enemy, defenderHud, gameStateSwitcher)
@@ -9,6 +26,9 @@
 
     public override void Enter()
     {
+        _defenderHud.Refresh();
+        _defenderHud.OnClickPlayButton += SwitchState;        
+
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
             AttackField attackField = _defenderHud.GetDesiredAttackField(i);
@@ -24,10 +44,13 @@
             BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue += bodyPart.SetProtection;
         }
+        
     }
 
     public override void Exit()
     {
+        _defenderHud.OnClickPlayButton -= SwitchState;
+
         for (int i = 0; i < _defenderHud.CountAttackFields; i++)
         {
             AttackField attackField = _defenderHud.GetDesiredAttackField(i);
@@ -43,12 +66,15 @@
             BodyPart bodyPart = _enemy.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue -= bodyPart.SetProtection;
         }
-
-        _gameStateSwitcher.SwitchState<EnemyPreparationState>();
     }
 
     public override void Tick()
     {
-        
+        PreparationTime -= Time.deltaTime;        
+    }
+
+    private void SwitchState()
+    {
+        _gameStateSwitcher.SwitchState<EnemyPreparationState>();
     }
 }

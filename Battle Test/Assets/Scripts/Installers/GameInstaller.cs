@@ -16,8 +16,7 @@ public class GameInstaller : MonoInstaller
     private void BindConfig()
     {
         Container.
-            BindInstance(_gameConfig).
-            AsSingle();
+            BindInstance(_gameConfig);            
     }
 
     private void BindDefenderHud()

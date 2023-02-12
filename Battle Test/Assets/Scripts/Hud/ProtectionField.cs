@@ -2,29 +2,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Toggle))]
 public class ProtectionField : MonoBehaviour
 {
     [SerializeField] private BodyPartType _type;
+    [SerializeField] private Toggle _toggle;    
 
     public event Action<bool> OnSetProtectionValue;
     public event Func<bool, bool> CanPushProtectionPoints;    
 
-    private Toggle _toggle;    
-
     public BodyPartType Type => _type;    
 
-    private void Start()
+    public void ClearToggle()
     {
-        _toggle = GetComponent<Toggle>();
+        _toggle.onValueChanged.RemoveAllListeners();
+        _toggle.isOn = false;
         _toggle.onValueChanged.AddListener(_ => SetProtectionValue(_toggle));
     }
 
-    private void OnDestroy()
-    {
-        _toggle.onValueChanged.RemoveListener(_ => SetProtectionValue(_toggle));
-    }
-    
     public void DisableToggle()
     {
         _toggle.enabled = _toggle.isOn;
