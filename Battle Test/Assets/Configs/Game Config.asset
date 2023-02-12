@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9954cc9493b8648a4ffb54293b6a6d, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
+  _preparationTime: 3
   _attackPoints: 5
   _protectionPoints: 2
+  _playerSpawnPoint: {x: 3.25, y: -0.5, z: 0.5}
+  _enemySpawnPoint: {x: -4, y: -0.5, z: -6}

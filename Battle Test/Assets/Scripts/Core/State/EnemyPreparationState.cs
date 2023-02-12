@@ -2,8 +2,6 @@
 
 public class EnemyPreparationState : GameBaseState
 {
-    private readonly float _cacheTime;
-
     private float _preparationTime;
 
     private float PreparationTime
@@ -26,14 +24,13 @@ public class EnemyPreparationState : GameBaseState
         DefenderHud defenderHud, GameConfig config,
         IGameStateSwitcher gameStateSwitcher)
         : base(player, enemy, defenderHud, config, gameStateSwitcher)
-    {
-        _cacheTime = _config.PreparationTime;
+    {        
     }
 
     public override void Enter()
     {
         Debug.Log(this);
-        _preparationTime = _cacheTime;
+        _preparationTime = _config.PreparationTime;
         
         InitFighters();
         RegistrationEvents();          
@@ -41,6 +38,7 @@ public class EnemyPreparationState : GameBaseState
 
     public override void Exit()
     {
+        _defenderHud.Refresh();
         DeregistrationEvents();
     }
 
