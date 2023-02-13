@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fighterPrefab: {fileID: 4665023721492628061, guid: cf955712bf751da4ebe9a2805446fb59,
     type: 3}
-  _health: 5
+  _health: 8
