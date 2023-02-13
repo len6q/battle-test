@@ -17,7 +17,7 @@ public sealed class FightArea : MonoBehaviour
         _enemy = enemy;
     }
     
-    public IEnumerator CheckGameState()
+    public IEnumerator Fight()
     {
         yield return FightAnimation();
         OnFight?.Invoke(_player.IsDead || _enemy.IsDead);             

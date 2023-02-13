@@ -159,8 +159,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.0141509175, g: 0.76309043, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -627,6 +627,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3405431264493645966, guid: b80cfee0558def046903c997393b8b45,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -517.8442
+      objectReference: {fileID: 0}
     - target: {fileID: 4035389977353586272, guid: b80cfee0558def046903c997393b8b45,
         type: 3}
       propertyPath: m_Pivot.x
@@ -732,10 +737,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4035389977353586273, guid: b80cfee0558def046903c997393b8b45,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 4035389977353586276, guid: b80cfee0558def046903c997393b8b45,
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6349785036764734469, guid: b80cfee0558def046903c997393b8b45,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -399.99994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b80cfee0558def046903c997393b8b45, type: 3}

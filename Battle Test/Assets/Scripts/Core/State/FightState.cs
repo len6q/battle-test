@@ -16,7 +16,7 @@ public sealed class FightState : GameBaseState
     public override void Enter()
     {
         _fightArea.OnFight += SwitchState;
-        _fightArea.StartCoroutine(_fightArea.CheckGameState());
+        _fightArea.StartCoroutine(_fightArea.Fight());
         
         Debug.Log(this);
     }
