@@ -4,12 +4,10 @@ using Zenject;
 public class GameInstaller : MonoInstaller
 {
     [SerializeField] private GameConfig _gameConfig;
-    [SerializeField] private DefenderHud _defenderHud;
     
     public override void InstallBindings()
     {
-        BindConfig();
-        BindDefenderHud();
+        BindConfig();        
         BindGame();
     }
 
@@ -17,13 +15,6 @@ public class GameInstaller : MonoInstaller
     {
         Container.
             BindInstance(_gameConfig);            
-    }
-
-    private void BindDefenderHud()
-    {
-        Container.
-            BindInstance(_defenderHud).
-            AsSingle();
     }
 
     private void BindGame()

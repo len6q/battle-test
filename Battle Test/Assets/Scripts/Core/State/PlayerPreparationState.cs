@@ -2,6 +2,9 @@
 
 public sealed class PlayerPreparationState : GameBaseState
 {
+    private readonly PreparationHud _preparationHud;
+    private readonly GameConfig _config;
+
     private float _preparationTime;
 
     private float PreparationTime
@@ -15,30 +18,35 @@ public sealed class PlayerPreparationState : GameBaseState
                 SwitchState();                
             }
                         
-            _defenderHud.SetValueOnTimer(Mathf.CeilToInt(_preparationTime));
+            _preparationHud.SetValueOnTimer(Mathf.CeilToInt(_preparationTime));
         }
     }
 
     public PlayerPreparationState(
+        IGameStateSwitcher gameStateSwitcher,
         Player player, Enemy enemy,
-        DefenderHud defenderHud, GameConfig config,
-        IGameStateSwitcher gameStateSwitcher)
-        : base(player, enemy, defenderHud, config, gameStateSwitcher)
-    {        
+        GameConfig config, PreparationHud preparationHud)
+        : base(gameStateSwitcher, player, enemy)
+    {
+        _preparationHud = preparationHud;
+        _config = config;
     }
 
     public override void Enter()
     {
-        Debug.Log(this);
+        _preparationHud.Open();
         _preparationTime = _config.PreparationTime;
 
-        InitFighters();
+        _preparationHud.ShowPlayerHealth(_player.Health);
+        _preparationHud.ShowEnemyHealth(_enemy.Health);
+
+        InitFightersLocation();
         RegistrationEvents();              
     }
 
     public override void Exit()
     {
-        _defenderHud.Refresh();
+        _preparationHud.Close();        
         DeregistrationEvents();
     }
 
@@ -54,20 +62,20 @@ public sealed class PlayerPreparationState : GameBaseState
 
     private void RegistrationEvents()
     {
-        _defenderHud.OnClickPlayButton += SwitchState;
+        _preparationHud.AddActionOnClick(SwitchState);        
 
-        for (int i = 0; i < _defenderHud.CountAttackFields; i++)
+        for (int i = 0; i < _preparationHud.CountAttackFields; i++)
         {
-            AttackField attackField = _defenderHud.GetDesiredAttackField(i);
+            AttackField attackField = _preparationHud.GetDesiredAttackField(i);
             BodyPart bodyPart = _enemy.GetDesiredPart(attackField.Type);
             attackField.OnSelected += bodyPart.Select;
             attackField.OnDeselected += bodyPart.Deselect;
             attackField.OnSetAttackValue += bodyPart.SetDamage;
         }
 
-        for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
+        for (int i = 0; i < _preparationHud.CountProtectionFields; i++)
         {
-            ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
+            ProtectionField protectionField = _preparationHud.GetDesiredProtectionField(i);
             BodyPart bodyPart = _player.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue += bodyPart.SetProtection;
             protectionField.OnDeselected += bodyPart.Deselect;
@@ -75,28 +83,28 @@ public sealed class PlayerPreparationState : GameBaseState
     }
 
     private void DeregistrationEvents()
-    {        
-        _defenderHud.OnClickPlayButton -= SwitchState;
+    {
+        _preparationHud.RemoveActionOnClick(SwitchState);
 
-        for (int i = 0; i < _defenderHud.CountAttackFields; i++)
+        for (int i = 0; i < _preparationHud.CountAttackFields; i++)
         {
-            AttackField attackField = _defenderHud.GetDesiredAttackField(i);
+            AttackField attackField = _preparationHud.GetDesiredAttackField(i);
             BodyPart bodyPart = _enemy.GetDesiredPart(attackField.Type);
             attackField.OnSelected -= bodyPart.Select;
             attackField.OnDeselected -= bodyPart.Deselect;
             attackField.OnSetAttackValue -= bodyPart.SetDamage;
         }
 
-        for (int i = 0; i < _defenderHud.CountProtectionFields; i++)
+        for (int i = 0; i < _preparationHud.CountProtectionFields; i++)
         {
-            ProtectionField protectionField = _defenderHud.GetDesiredProtectionField(i);
+            ProtectionField protectionField = _preparationHud.GetDesiredProtectionField(i);
             BodyPart bodyPart = _player.GetDesiredPart(protectionField.Type);
             protectionField.OnSetProtectionValue -= bodyPart.SetProtection;
             protectionField.OnDeselected -= bodyPart.Deselect;
         }
     }
 
-    private void InitFighters()
+    private void InitFightersLocation()
     {
         _player.transform.localPosition = _config.PlayerSpawnPoint;
         _player.transform.localRotation = Quaternion.identity;

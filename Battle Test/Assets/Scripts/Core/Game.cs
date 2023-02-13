@@ -4,7 +4,9 @@ using Zenject;
 
 public sealed class Game : IGameStateSwitcher, IInitializable, ITickable
 {            
-    private readonly DefenderHud _defenderHud;
+    private readonly PreparationHud _preparationHud;
+    private readonly FightHud _fightHud;
+    private readonly GameOverHud _gameOverHud;
     private readonly Player _player;
     private readonly Enemy _enemy;
     private readonly GameConfig _config;
@@ -14,15 +16,15 @@ public sealed class Game : IGameStateSwitcher, IInitializable, ITickable
     private List<GameBaseState> _allStates;
 
     public Game(
-        Player player,
-        Enemy enemy,
-        DefenderHud defenderHud,
-        GameConfig gameConfig,
-        FightArea fightArea)
+        Player player, Enemy enemy,
+        PreparationHud preparationHud, FightHud fightHud, GameOverHud gameOverHud,
+        GameConfig gameConfig, FightArea fightArea)
     {
         _player = player;
         _enemy = enemy;
-        _defenderHud = defenderHud;
+        _preparationHud = preparationHud;
+        _fightHud = fightHud;
+        _gameOverHud = gameOverHud;
         _config = gameConfig;
         _fightArea = fightArea;
     }
@@ -31,10 +33,11 @@ public sealed class Game : IGameStateSwitcher, IInitializable, ITickable
     {        
         _allStates = new List<GameBaseState>()
         {
-            new PlayerPreparationState(_player, _enemy, _defenderHud, _config, this),
-            new EnemyPreparationState(_player, _enemy, _defenderHud, _config, this),
-            new FightState(_player, _enemy, _defenderHud, _config, this, _fightArea),
-            new GameOverState(_player, _enemy, _defenderHud, _config, this)
+            new StartupState(this, _player, _enemy, _preparationHud, _fightHud, _gameOverHud),
+            new PlayerPreparationState(this, _player, _enemy, _config, _preparationHud),
+            new EnemyPreparationState(this, _player, _enemy, _config, _preparationHud),
+            new FightState(this, _player, _enemy, _fightArea, _fightHud),
+            new GameOverState(this, _player, _enemy, _gameOverHud)
         };
         _currentState = _allStates[0];
         _currentState.Enter();

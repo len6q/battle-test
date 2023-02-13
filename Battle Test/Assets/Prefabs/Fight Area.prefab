@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4581533980542548401}
   - component: {fileID: 2315040665637747714}
   m_Layer: 0
-  m_Name: FightArea
+  m_Name: Fight Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Zenject;
 
-public class DefenderHud : MonoBehaviour
+public sealed class PreparationHud : GameWindow
 {
     [Header("Attack Fields")]
     [SerializeField] private List<AttackField> _allAttackFields;
@@ -17,8 +18,9 @@ public class DefenderHud : MonoBehaviour
     [Space]
     [SerializeField] private Button _playButton;
     [SerializeField] private TextMeshProUGUI _timer;
-
-    public event Action OnClickPlayButton;
+    [Space]
+    [SerializeField] private TextMeshProUGUI _playerHealthText;
+    [SerializeField] private TextMeshProUGUI _enemyHealthText;
 
     private GameConfig _gameConfig;
     private int _attackPoints;
@@ -58,30 +60,38 @@ public class DefenderHud : MonoBehaviour
     private void Construct(GameConfig config)
     {
         _gameConfig = config;
+        Refresh();  
+    }
+
+    public override void Open()
+    {
+        _allAttackFields.ForEach(field => field.CanPushAttackPoint += CanPushAttackPoint);
+        _allProtectionFields.ForEach(field => field.CanPushProtectionPoints += CanPushProtectionPoint);        
+
+        base.Open();
+    }
+
+    public override void Close()
+    {
         Refresh();
 
-        _allAttackFields.ForEach(field => field.CanPushAttackPoint += CanPushAttackPoint);
-        _allProtectionFields.ForEach(field => field.CanPushProtectionPoints += CanPushProtectionPoint);
-
-        _playButton.onClick.AddListener(ClickButton);
-    }
-
-    private void OnDestroy()
-    {
         _allAttackFields.ForEach(field => field.CanPushAttackPoint -= CanPushAttackPoint);
-        _allProtectionFields.ForEach(field => field.CanPushProtectionPoints -= CanPushProtectionPoint);
+        _allProtectionFields.ForEach(field => field.CanPushProtectionPoints -= CanPushProtectionPoint);        
 
-        _playButton.onClick.RemoveListener(ClickButton);
+        base.Close();
     }
 
-    public void Refresh()
-    {
-        CurrentAttackPoints = _gameConfig.AttackPoints;
-        CurrentProtectionPoints = _gameConfig.ProtectionPoints;
+    public void AddActionOnClick(UnityAction action) =>
+        _playButton.onClick.AddListener(action);
 
-        _allAttackFields.ForEach(field => field.ClearField());
-        _allProtectionFields.ForEach(field => field.ClearToggle());
-    }
+    public void RemoveActionOnClick(UnityAction action) =>
+        _playButton.onClick.RemoveListener(action);
+
+    public void ShowPlayerHealth(int health) =>
+        _playerHealthText.text = health.ToString();
+
+    public void ShowEnemyHealth(int health) =>
+        _enemyHealthText.text = health.ToString();
 
     public AttackField GetDesiredAttackField(int indexCollection) => 
         _allAttackFields[indexCollection];
@@ -92,9 +102,15 @@ public class DefenderHud : MonoBehaviour
     public void SetValueOnTimer(int value) =>
         _timer.text = value.ToString();
 
-    private void ClickButton() =>
-        OnClickPlayButton?.Invoke();
-    
+    private void Refresh()
+    {
+        CurrentAttackPoints = _gameConfig.AttackPoints;
+        CurrentProtectionPoints = _gameConfig.ProtectionPoints;
+
+        _allAttackFields.ForEach(field => field.ClearField());
+        _allProtectionFields.ForEach(field => field.ClearToggle());
+    }
+
     private bool CanPushAttackPoint(int value)
     {        
         if(CurrentAttackPoints >= value)

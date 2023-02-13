@@ -1879,7 +1879,7 @@ GameObject:
   - component: {fileID: 8088767686658112078}
   - component: {fileID: 6525786789175948967}
   m_Layer: 5
-  m_Name: HealthPoint
+  m_Name: A_HealthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2628,7 +2628,7 @@ GameObject:
   - component: {fileID: 3371175799155045598}
   - component: {fileID: 8876264605738680176}
   m_Layer: 5
-  m_Name: HealthPoint
+  m_Name: E_HealthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2994,6 +2994,7 @@ GameObject:
   - component: {fileID: 5249380424590315999}
   - component: {fileID: 7131911491112472899}
   - component: {fileID: 8671100210695613613}
+  - component: {fileID: 5554615016177517229}
   m_Layer: 5
   m_Name: PreparationCanvas
   m_TagString: Untagged
@@ -3095,10 +3096,47 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294691761150126176}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &5554615016177517229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294691761150126176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df73122b27f4d54ea225823dd4fde81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 8671100210695613613}
+  _allAttackFields:
+  - {fileID: 4797200144926022380}
+  - {fileID: 1278359960299065223}
+  - {fileID: 7085516703761663105}
+  - {fileID: 3568685447633247537}
+  - {fileID: 4224321375608504953}
+  - {fileID: 429345588851946357}
+  - {fileID: 2512830064783396648}
+  - {fileID: 7464453363604840525}
+  _attackPointsText: {fileID: 4035389977283054254}
+  _allProtectionFields:
+  - {fileID: 6573022175039814003}
+  - {fileID: 4448649771814929601}
+  - {fileID: 8122123899453376979}
+  - {fileID: 8887916623149817617}
+  - {fileID: 6936908113387462013}
+  - {fileID: 6778716455055146513}
+  - {fileID: 7982878449234185752}
+  - {fileID: 7672797559079736949}
+  _protectionPointsText: {fileID: 7943301362733319899}
+  _playButton: {fileID: 7612648123745106313}
+  _timer: {fileID: 1654870998932157358}
+  _playerHealthText: {fileID: 1832332172172458825}
+  _enemyHealthText: {fileID: 6525786789175948967}
 --- !u!1 &3485905188317106553
 GameObject:
   m_ObjectHideFlags: 0
@@ -3411,7 +3449,7 @@ GameObject:
   - component: {fileID: 8600359839641642976}
   - component: {fileID: 1832332172172458825}
   m_Layer: 5
-  m_Name: HealthPoint
+  m_Name: P_HealthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4121,7 +4159,6 @@ GameObject:
   - component: {fileID: 4035389977353586273}
   - component: {fileID: 4035389977353586274}
   - component: {fileID: 4035389977353586275}
-  - component: {fileID: 1853461647476519469}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4213,40 +4250,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1853461647476519469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4035389977353586276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df73122b27f4d54ea225823dd4fde81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _allAttackFields:
-  - {fileID: 4797200144926022380}
-  - {fileID: 1278359960299065223}
-  - {fileID: 7085516703761663105}
-  - {fileID: 3568685447633247537}
-  - {fileID: 4224321375608504953}
-  - {fileID: 429345588851946357}
-  - {fileID: 2512830064783396648}
-  - {fileID: 7464453363604840525}
-  _attackPointsText: {fileID: 4035389977283054254}
-  _allProtectionFields:
-  - {fileID: 6573022175039814003}
-  - {fileID: 4448649771814929601}
-  - {fileID: 8122123899453376979}
-  - {fileID: 8887916623149817617}
-  - {fileID: 6936908113387462013}
-  - {fileID: 6778716455055146513}
-  - {fileID: 7982878449234185752}
-  - {fileID: 7672797559079736949}
-  _protectionPointsText: {fileID: 7943301362733319899}
-  _playButton: {fileID: 7612648123745106313}
-  _timer: {fileID: 1654870998932157358}
 --- !u!1 &4035389977808435982
 GameObject:
   m_ObjectHideFlags: 0
@@ -5508,13 +5511,15 @@ GameObject:
   - component: {fileID: 8062863409826665810}
   - component: {fileID: 7016292423550521886}
   - component: {fileID: 5656672654628686152}
+  - component: {fileID: 6077151996194882809}
+  - component: {fileID: 8207881377637537274}
   m_Layer: 5
   m_Name: FightCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &635508830976357914
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5582,7 +5587,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5656672654628686152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5600,6 +5605,33 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &6077151996194882809
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5404806960369107195}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &8207881377637537274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5404806960369107195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf9da172c40f7c4cbc1504cc643f150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 6077151996194882809}
+  _playerHealthText: {fileID: 2559297971317858930}
+  _enemyHealthText: {fileID: 8876264605738680176}
 --- !u!1 &5437363723058134942
 GameObject:
   m_ObjectHideFlags: 0
@@ -5763,7 +5795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.003921569, g: 0.6627451, b: 0.78823537, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6314,7 +6346,7 @@ GameObject:
   - component: {fileID: 6574974467900835760}
   - component: {fileID: 2559297971317858930}
   m_Layer: 5
-  m_Name: HealthPoint
+  m_Name: P_HealthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7611,13 +7643,15 @@ GameObject:
   - component: {fileID: 763083303511530324}
   - component: {fileID: 7134780520459674715}
   - component: {fileID: 6513414160463689480}
+  - component: {fileID: 2203575062177385296}
+  - component: {fileID: 606159432837700240}
   m_Layer: 5
   m_Name: GameOverCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &147142571032954170
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7682,7 +7716,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6513414160463689480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7700,6 +7734,33 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &2203575062177385296
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7718211755669324508}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &606159432837700240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7718211755669324508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72f665ee7420e49bf9ea53cb20ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 2203575062177385296}
+  _gameOverText: {fileID: 5583043056574480851}
+  _playButton: {fileID: 448378552086399922}
 --- !u!1 &7748216228392850637
 GameObject:
   m_ObjectHideFlags: 0
@@ -8663,8 +8724,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0432\u044B\u0438\u0433\u0440\u0430\u043B \u0431\u043E\u0435\u0446 \u0432
-    \u043A\u0440\u0430\u0441\u043D\u043E\u043C \u0443\u0433\u043B\u0443"
+  m_text: "\u043D\u0438\u0447\u044C\u044F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f8015880580207b4db3f4aed4fee759a, type: 2}
   m_sharedMaterial: {fileID: 7013868581254083590, guid: f8015880580207b4db3f4aed4fee759a,
@@ -8692,8 +8752,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 110
-  m_fontSizeBase: 110
+  m_fontSize: 105
+  m_fontSizeBase: 105
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

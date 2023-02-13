@@ -1,39 +1,52 @@
-﻿using UnityEngine;
-
-public sealed class GameOverState : GameBaseState
+﻿public sealed class GameOverState : GameBaseState
 {
+    private readonly GameOverHud _gameOverHud;
+
     public GameOverState(
+        IGameStateSwitcher gameStateSwitcher,
         Player player, Enemy enemy,
-        DefenderHud defenderHud, GameConfig config,
-        IGameStateSwitcher gameStateSwitcher)
-        : base(player, enemy, defenderHud, config, gameStateSwitcher)
+        GameOverHud gameOverHud)
+        : base(gameStateSwitcher, player, enemy)
     {
+        _gameOverHud = gameOverHud;
     }
 
     public override void Enter()
     {
-        Debug.Log(this);
+        _player.Visible = false;
+        _enemy.Visible = false;        
+
+        _gameOverHud.Open();
+        _gameOverHud.AddAction(SwitchState);
+
         if(_player.IsDead && _enemy.IsDead)
         {
-            Debug.Log("Draw");
+            _gameOverHud.ShowDraw();
         }
         else if(_player.IsDead)
         {
-            Debug.Log($"{_enemy.name} is win!");
+            _gameOverHud.ShowEnemyWinner();
         }
         else
         {
-            Debug.Log($"{_player.name} is win!");
+            _gameOverHud.ShowPlayerWinner();
         }
     }
 
     public override void Exit()
     {
-        
+        _player.Visible = true;
+        _enemy.Visible = true;
+        _gameOverHud.RemoveAction(SwitchState);
+        _gameOverHud.Close();
     }
 
     public override void Tick()
     {
-
+    }
+    
+    private void SwitchState()
+    {
+        _gameStateSwitcher.SwitchState<StartupState>();
     }
 }
