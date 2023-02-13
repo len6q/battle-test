@@ -582,11 +582,11 @@ MonoBehaviour:
     type: 3}
   _playerFighterConfig: {fileID: 11400000, guid: 872963ad0e8a5524a96c43e0eb77f5fc,
     type: 2}
-  _playerVisualConfig: {fileID: 11400000, guid: caa412d0a7f7593408e14d6848f52ac4,
+  _playerVisualConfig: {fileID: 11400000, guid: 8751cd694d9426a44b48ac0fd9ee2ee0,
     type: 2}
   _enemyFighterConfig: {fileID: 11400000, guid: 59f7d54b0f508714791eb8758a46d8c5,
     type: 2}
-  _enemyVisualConfig: {fileID: 11400000, guid: 8751cd694d9426a44b48ac0fd9ee2ee0, type: 2}
+  _enemyVisualConfig: {fileID: 11400000, guid: caa412d0a7f7593408e14d6848f52ac4, type: 2}
 --- !u!114 &1238072170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,6 +655,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2203575062177385296, guid: b80cfee0558def046903c997393b8b45,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4035389977353586272, guid: b80cfee0558def046903c997393b8b45,
         type: 3}
       propertyPath: m_Pivot.x

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class AttackField : MonoBehaviour, ISelectHandler, IDeselectHandler
+public sealed class AttackField : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private BodyPartType _type;
     [SerializeField] private TMP_InputField _field;

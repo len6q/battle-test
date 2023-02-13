@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProtectionField : MonoBehaviour
+public sealed class ProtectionField : MonoBehaviour
 {
     [SerializeField] private BodyPartType _type;
     [SerializeField] private Toggle _toggle;

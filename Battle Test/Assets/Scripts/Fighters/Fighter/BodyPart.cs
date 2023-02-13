@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
-public class BodyPart : MonoBehaviour
+public sealed class BodyPart : MonoBehaviour
 {
     [SerializeField] private BodyPartType _type;
 
