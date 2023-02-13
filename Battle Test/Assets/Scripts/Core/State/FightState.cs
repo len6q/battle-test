@@ -30,34 +30,29 @@
 
         DeregistrationEvents();
         _player.Refresh();
-        _enemy.Refresh();        
+        _enemy.Refresh();
     }
 
     public override void Tick()
-    {        
-    }
-
-    private void SwitchState(bool isGameOver)
     {
-        if (isGameOver)        
-            _gameStateSwitcher.SwitchState<GameOverState>();        
-        else        
-            _gameStateSwitcher.SwitchState<PlayerPreparationState>();        
+        if (_fightArea.IsFightDone == false)
+            return;
+
+        if (_player.IsDead || _enemy.IsDead)
+            _gameStateSwitcher.SwitchState<GameOverState>();
+        else
+            _gameStateSwitcher.SwitchState<PlayerPreparationState>();
     }
 
     private void RegistrationEvents()
     {
         _player.OnTakenDamage += _fightHud.ShowPlayerHealth;
-        _enemy.OnTakenDamage += _fightHud.ShowEnemyHealth;
-
-        _fightArea.OnFight += SwitchState;
+        _enemy.OnTakenDamage += _fightHud.ShowEnemyHealth;        
     }
 
     private void DeregistrationEvents()
     {
         _player.OnTakenDamage -= _fightHud.ShowPlayerHealth;
-        _enemy.OnTakenDamage -= _fightHud.ShowEnemyHealth;
-
-        _fightArea.OnFight -= SwitchState;
+        _enemy.OnTakenDamage -= _fightHud.ShowEnemyHealth;        
     }
 }

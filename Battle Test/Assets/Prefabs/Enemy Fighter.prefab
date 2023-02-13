@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5099770777684959704}
   - component: {fileID: 4665023721492628061}
+  - component: {fileID: 1068663508469626061}
   m_Layer: 0
   m_Name: Enemy Fighter
   m_TagString: Untagged
@@ -159,6 +160,27 @@ MonoBehaviour:
   - {fileID: 8367441720862093316}
   - {fileID: 5945436272890878042}
   - {fileID: 2570337238411066798}
+  _animator: {fileID: 1068663508469626061}
+--- !u!95 &1068663508469626061
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623710606021109009}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0dba890065e536a4d8e4e772782a8546, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4741146407486914920
 GameObject:
   m_ObjectHideFlags: 0
