@@ -565,15 +565,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c581ba017326fe4c85cd3eb0ca0e294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fightAreaPrefab: {fileID: 2315040665637747714, guid: a122be9d451afad408d8c2bbc57fc8cb,
+    type: 3}
   _playerFighterConfig: {fileID: 11400000, guid: 872963ad0e8a5524a96c43e0eb77f5fc,
     type: 2}
   _playerVisualConfig: {fileID: 11400000, guid: caa412d0a7f7593408e14d6848f52ac4,
     type: 2}
-  _playerSpawnPoint: {x: 3.25, y: -0.5, z: 0.5}
   _enemyFighterConfig: {fileID: 11400000, guid: 59f7d54b0f508714791eb8758a46d8c5,
     type: 2}
   _enemyVisualConfig: {fileID: 11400000, guid: 8751cd694d9426a44b48ac0fd9ee2ee0, type: 2}
-  _enemySpawnPoint: {x: -4, y: -0.5, z: -6}
 --- !u!1 &1907214521
 GameObject:
   m_ObjectHideFlags: 0

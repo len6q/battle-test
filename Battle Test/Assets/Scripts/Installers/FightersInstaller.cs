@@ -3,6 +3,8 @@ using Zenject;
 
 public class FightersInstaller : MonoInstaller
 {
+    [SerializeField] private FightArea _fightAreaPrefab;
+    [Space]
     [Header("Player Configs")]
     [SerializeField] private FighterConfig _playerFighterConfig;
     [SerializeField] private VisualisationConfig _playerVisualConfig;    
@@ -18,6 +20,8 @@ public class FightersInstaller : MonoInstaller
 
         BindEnemyConfig();
         BindEnemy();
+
+        BindFightArea();
     }
 
     private void BindPlayerConfig()
@@ -59,6 +63,16 @@ public class FightersInstaller : MonoInstaller
 
         Container.
             BindInstance(fighter).
+            AsSingle();
+    }
+
+    private void BindFightArea()
+    {
+        var area = Container.
+            InstantiatePrefabForComponent<FightArea>(_fightAreaPrefab);
+
+        Container.
+            BindInstance(area).
             AsSingle();
     }
 }

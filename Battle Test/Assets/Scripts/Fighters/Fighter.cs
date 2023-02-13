@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
 
 public abstract class Fighter : MonoBehaviour
 {
-    [SerializeField] private List<BodyPart> _allParts;    
-    
+    [SerializeField] private List<BodyPart> _allParts;
+
+    private const float WAIT_TIME = 1f;
+
     private int _health;
 
-    public int Health => _health;
+    public bool IsDead => _health <= 0;
+
+    public int CountParts => _allParts.Count;
 
     [Inject]
     private void Construct(FighterConfig fighterConfig, VisualisationConfig visualConfig)
@@ -21,15 +26,14 @@ public abstract class Fighter : MonoBehaviour
     public BodyPart GetDesiredPart(BodyPartType type) => 
         _allParts.FirstOrDefault(part => part.Type == type);    
 
-    public void Fight()
+    public IEnumerator TakeDamage(int index)
     {
-        foreach (var part in _allParts)
-        {
-            if(part.IsProtected == false)
-            {
-                _health -= part.ReceivedDamage;
-            }
-        }
-        Debug.Log(_health);
+        if(_allParts[index].IsProtected || 
+            _allParts[index].ReceivedDamage == 0)        
+            yield break;
+
+        yield return new WaitForSeconds(WAIT_TIME);
+        _health -= _allParts[index].ReceivedDamage;
+        Debug.Log($"{name} is taking damage!");
     }
 }
