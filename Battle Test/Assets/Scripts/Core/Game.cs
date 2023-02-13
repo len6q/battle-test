@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 
-public class Game : IGameStateSwitcher, IInitializable, ITickable
+public sealed class Game : IGameStateSwitcher, IInitializable, ITickable
 {            
     private readonly DefenderHud _defenderHud;
     private readonly Player _player;
