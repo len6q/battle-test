@@ -24,6 +24,12 @@ public class BodyPart : MonoBehaviour
         _renderer.material = _visualConfig.Standard;
     }
 
+    public void Clear()
+    {
+        _isProtected = false;
+        _receivedDamage = 0;
+    }
+
     public void Select()
     {
         _renderer.material = _visualConfig.Attack;

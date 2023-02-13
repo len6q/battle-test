@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class FightState : GameBaseState
+public sealed class FightState : GameBaseState
 {
     private readonly FightArea _fightArea;
 
@@ -16,7 +15,7 @@ public class FightState : GameBaseState
 
     public override void Enter()
     {
-        _fightArea.OnFightResult += SwitchState;
+        _fightArea.OnFight += SwitchState;
         _fightArea.StartCoroutine(_fightArea.CheckGameState());
         
         Debug.Log(this);
@@ -24,8 +23,10 @@ public class FightState : GameBaseState
 
     public override void Exit()
     {
+        _fightArea.OnFight -= SwitchState;
+        _player.Refresh();
+        _enemy.Refresh();
         _defenderHud.Refresh();
-        _fightArea.OnFightResult += SwitchState;
     }
 
     public override void Tick()

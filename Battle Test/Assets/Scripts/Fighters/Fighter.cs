@@ -26,6 +26,9 @@ public abstract class Fighter : MonoBehaviour
     public BodyPart GetDesiredPart(BodyPartType type) => 
         _allParts.FirstOrDefault(part => part.Type == type);    
 
+    public void Refresh() =>
+        _allParts.ForEach(part => part.Clear());
+            
     public IEnumerator TakeDamage(int index)
     {
         if(_allParts[index].IsProtected || 
@@ -33,7 +36,6 @@ public abstract class Fighter : MonoBehaviour
             yield break;
 
         yield return new WaitForSeconds(WAIT_TIME);
-        _health -= _allParts[index].ReceivedDamage;
-        Debug.Log($"{name} is taking damage!");
+        _health -= _allParts[index].ReceivedDamage;        
     }
 }

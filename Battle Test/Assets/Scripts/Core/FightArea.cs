@@ -5,7 +5,7 @@ using Zenject;
 
 public sealed class FightArea : MonoBehaviour
 {
-    public event Action<bool> OnFightResult;
+    public event Action<bool> OnFight;
 
     private Player _player;
     private Enemy _enemy;        
@@ -20,7 +20,7 @@ public sealed class FightArea : MonoBehaviour
     public IEnumerator CheckGameState()
     {
         yield return FightAnimation();
-        OnFightResult?.Invoke(_player.IsDead || _enemy.IsDead);             
+        OnFight?.Invoke(_player.IsDead || _enemy.IsDead);             
     }
     
     private IEnumerator FightAnimation()

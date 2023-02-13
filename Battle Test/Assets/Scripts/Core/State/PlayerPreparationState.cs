@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerPreparationState : GameBaseState
+public sealed class PlayerPreparationState : GameBaseState
 {
     private float _preparationTime;
 

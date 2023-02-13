@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameOverState : GameBaseState
+public sealed class GameOverState : GameBaseState
 {
     public GameOverState(
         Player player, Enemy enemy,
@@ -13,6 +13,18 @@ public class GameOverState : GameBaseState
     public override void Enter()
     {
         Debug.Log(this);
+        if(_player.IsDead && _enemy.IsDead)
+        {
+            Debug.Log("Draw");
+        }
+        else if(_player.IsDead)
+        {
+            Debug.Log($"{_enemy.name} is win!");
+        }
+        else
+        {
+            Debug.Log($"{_player.name} is win!");
+        }
     }
 
     public override void Exit()
