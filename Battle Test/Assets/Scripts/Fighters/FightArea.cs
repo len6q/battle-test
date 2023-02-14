@@ -35,6 +35,7 @@ public sealed class FightArea : MonoBehaviour
                 _enemy.PlayAttackAnimation();
                 yield return _player.TakeDamage(i);
             }
+
             if(_enemy.CanTakeDamage(i))
             {
                 _player.PlayAttackAnimation();
